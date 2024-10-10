@@ -5,7 +5,7 @@ function Logo({ width = '100px' }) {
   return (
     <div className={`${width}`}>
       <Link to={"/"}>
-        Logo
+        BLOGMania
       </Link>
     </div>
   )

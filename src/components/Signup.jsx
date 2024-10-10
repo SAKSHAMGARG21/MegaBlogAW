@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
-import { Button, Input, Logo } from "./index";
+import { Button, Input, Loadar, Logo } from "./index";
 import authService from '../appwrite/auth';
-import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { login as authLogin } from '../store/authSilce';
 
 function Signup() {
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const { register, handleSubmit } = useForm();
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const create = async (newuser) => {
         setError("");
         try {
+            setLoading(true);
             const userData = await authService.createAccount(newuser);
             if (userData) {
-                // const userData = await authService.getCurrUser();
-                if (userData) dispatch(authLogin(userData));
-                navigate("/");
+                setLoading(false);
+                navigate("/login");
             }
         } catch (error) {
             setError(error.message);
@@ -28,8 +26,8 @@ function Signup() {
     }
 
     return (
-        <div className="flex items-center justify-center my-28 text-black">
-            <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+        <div className="flex items-center justify-center text-black h-lvh">
+            <div className={`w-full max-w-lg bg-gray-100 rounded-xl p-10`}>
                 <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
                         <Logo width="100%" />
@@ -77,7 +75,10 @@ function Signup() {
                             })}
                         />
                         <Button type="submit" className="w-full">
-                            Create Account
+                            Create Account 
+                            {
+                                loading && <Loadar />
+                            }
                         </Button>
                     </div>
                 </form>
