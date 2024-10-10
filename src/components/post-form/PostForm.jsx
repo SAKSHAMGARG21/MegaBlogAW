@@ -108,7 +108,7 @@ function PostForm({ post }) {
                         <img
                             src={appwriteService.getFilePreview(post.featuredimage)}
                             alt={post.title}
-                            className="rounded-lg"
+                            className="rounded-lg h-60 w-full"
                         />
                     </div>
                 )}
